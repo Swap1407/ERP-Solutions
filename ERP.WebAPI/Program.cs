@@ -1,4 +1,9 @@
+using ERP.Business.Services;
+using ERP.Business.Services.Interfaces;
 using ERP.Infrastructure.Data;
+using ERP.Infrastructure.Interfaces;
+using ERP.Infrastructure.Repositories;
+using ERP.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +16,13 @@ builder.Services.AddDbContext<ERPDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     options.UseLazyLoadingProxies();
 });
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
