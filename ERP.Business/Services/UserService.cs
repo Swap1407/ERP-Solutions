@@ -35,5 +35,11 @@ namespace ERP.Business.Services
             _unitOfWork.Users.Update(user);
             return await _unitOfWork.SaveChangesAsync();
         }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var users = await Task.Run(() => _unitOfWork.Users.Get(user => user.Email == email));
+            return users.FirstOrDefault();
+        }
     }
 }

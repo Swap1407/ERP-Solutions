@@ -5,6 +5,7 @@ using ERP.Infrastructure.Interfaces;
 using ERP.Infrastructure.Repositories;
 using ERP.Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using Erp.Auth.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,7 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
-
+builder.Services.AddJwtAuthentication(builder.Configuration);
 
 
 builder.Services.AddControllers();
@@ -40,6 +41,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

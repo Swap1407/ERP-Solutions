@@ -11,5 +11,7 @@ namespace ERP.Business.Services.Interfaces
         Task<int> DeleteUser(User user);
 
         Task<User> GetUser(Guid id);
+
+        Task<User> GetUserByEmail(string id);
     }
 }
